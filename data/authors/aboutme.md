@@ -1,7 +1,7 @@
 ---
 name: Marc Soliman
 avatar: /static/images/portrait.jpg
-#occupation: Professor of Atmospheric Science
+occupation: Game Developer and Software Engineer
 #company: Stanford University
 email: Marc.soliman@outlook.com
 #twitter: https://twitter.com/Twitter

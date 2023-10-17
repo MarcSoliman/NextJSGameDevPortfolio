@@ -4,8 +4,9 @@ import siteMetadata from '@/data/siteMetadata'
 import { useState } from 'react'
 import Pagination from '@/components/Pagination'
 import formatDate from '@/lib/utils/formatDate'
+import Image from "next/image";
 
-export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination}) {
+export default function ListLayout({ posts, title, initialDisplayPosts = [], pagination }) {
   const [searchValue, setSearchValue] = useState('')
   const filteredBlogPosts = posts.filter((frontMatter) => {
     const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ')
@@ -53,36 +54,42 @@ export default function ListLayout({ posts, title, initialDisplayPosts = [], pag
             const { slug, date, title, summary, tags } = frontMatter
             return (
               <li key={slug} className="py-4 ">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0 flex">
+                <article className="flex space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <dl>
                     <dt className="sr-only">Published on</dt>
-                    <dd className="invisible xl:visible text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                    <dd className="invisible text-base font-medium leading-6 text-gray-500 dark:text-gray-400 xl:visible">
                       <time dateTime={date}>{formatDate(date)}</time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>
-                      <h3 className="flex justify-center lg:justify-start text-2xl font-bold leading-8 tracking-tight">
+                      <h3 className="flex justify-center text-2xl font-bold leading-8 tracking-tight lg:justify-start">
                         <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
                           {title}
                         </Link>
                       </h3>
-                      <div className='lg:flex lg:gap-7'>
-                      <Link href={`/blog/${slug}`}>
-                      <img className='rounded-2xl py-5 ' src={frontMatter.image} width="90%"  alt={frontMatter.title} />
-                      </Link>
-                      <div className='lg:flex lg:flex-col lg:justify-center'>
-                      <div className='flex flex-wrap'>
-                        {tags.map((tag) => (
-                          <Tag key={tag} text={tag} />
-                        ))}
+                      <div className="lg:flex lg:gap-8">
+                        <Link href={`/blog/${slug}`} className="flex-shrink-0 lg:pt-2">
+                          <Image
+                            className=" rounded-2xl py-5"
+                            src={frontMatter.image}
+                            width={"200%"}
+                            height={"200%"}
+                            alt={frontMatter.title}
+                          />
+                        </Link>
+                        <div className="lg:flex lg:flex-col lg:justify-center">
+                          <div className="flex flex-wrap">
+                            {tags.map((tag) => (
+                              <Tag key={tag} text={tag} />
+                            ))}
+                          </div>
+
+                          <div className="prose max-w-none text-[3vw] text-gray-500 dark:text-gray-400 md:text-lg">
+                            {summary}
+                          </div>
+                        </div>
                       </div>
-                    
-                    <div className="prose max-w-none text-gray-500 dark:text-gray-400 text-[3vw] md:text-lg">
-                      {summary}
-                    </div>
-                    </div>
-                    </div>
                     </div>
                   </div>
                 </article>
